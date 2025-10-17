@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>ZENIQ: Solutions Made Simple | Software Engineering Consultancy</title>
+  <meta name="description" content="ZENIQ is a student-led ICT team specializing in diagnosing organizational challenges and delivering practical, secure software solutions. We find the problems. We build the fix.">
+  <meta name="keywords" content="software engineering, consultancy, student team, ICT solutions, GovTech, business analysis, system design, web development">
+  <link rel="canonical" href="https://zeniq.com/" />
+  <meta name="theme-color" content="#0f172a" />
+
+  <meta property="og:title" content="ZENIQ: Solutions Made Simple">
+  <meta property="og:description" content="From issue to impact. Diagnosing organizational issues and building smart software.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zeniq.com/" />
+  <meta property="og:image" content="https://zeniq.com/og-image.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    /* ------------- Brand Tokens ------------- */
+    :root {
+      --clr-primary: #0f172a; /* Deep/Navy Tech Blue */
+      --clr-secondary: #e2e8f0; /* Metallic Silver (Light Gray) */
+      --clr-accent: #3b82f6; /* Electric Blue */
+      --clr-glass: rgba(226, 232, 240, 0.05); /* Transparent Silver */
+      --clr-highlight: #06b6d4; /* Subtle Cyan */
+    }
+
+    /* ------------- Primitives (no Tailwind @apply — CDN-safe) ------------- */
+    .glass-panel {
+      background-color: var(--clr-glass);
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(226, 232, 240, 0.1);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -2px rgba(0,0,0,.06);
+    }
+
+    .focus-visible-accent:focus-visible {
+      outline: 2px solid var(--clr-accent);
+      outline-offset: 3px;
+    }
+
+    .tech-bg {
+      background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px),
+                       radial-gradient(circle, rgba(59,130,246,0.05) 1px, transparent 1px);
+      background-size: 40px 40px, 80px 80px;
+    }
+
+    /* Horizontal scrollbar styling */
+    .horizontal-scroll-bar::-webkit-scrollbar { height: 6px; }
+    .horizontal-scroll-bar::-webkit-scrollbar-thumb { background-color: var(--clr-accent); border-radius: 10px; }
+    .horizontal-scroll-bar::-webkit-scrollbar-track { background-color: rgba(255,255,255,0.1); }
+
+    /* Reveal animation */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .8s ease-out, transform .8s ease-out; }
+    .fade-in.is-visible { opacity: 1; transform: translateY(0); }
+
+    .font-geometric {
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+
+    /* CDN-safe buttons: no @apply */
+    .cta-button { padding: .75rem 2rem; border-radius: 9999px; font-weight: 600; font-size: 1.125rem; transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease; }
+    .cta-button:hover { transform: scale(1.05); }
+    .primary-cta { background: var(--clr-accent); color: #fff; box-shadow: 0 0 15px rgba(59,130,246,.5); }
+    .primary-cta:hover { box-shadow: 0 0 25px rgba(59,130,246,.8); }
+    .secondary-cta { background: transparent; border: 2px solid var(--clr-secondary); color: var(--clr-secondary); }
+    .secondary-cta:hover { background: rgba(226,232,240,.1); }
+
+    /* CDN-safe nav underline */
+    .nav-link { position: relative; display: inline-block; padding-bottom: 2px; }
+    .nav-underline { position: absolute; left: 0; bottom: -4px; width: 0; height: 2px; background: var(--clr-accent); transition: width .3s ease; }
+    .nav-link:hover .nav-underline, .nav-link:focus-visible .nav-underline { width: 100%; }
+
+    /* Timeline dot (inline, not absolutely positioned) */
+    .timeline-dot-inline { width: 16px; height: 16px; border-radius: 9999px; background: var(--clr-accent); border: 2px solid var(--clr-primary); box-shadow: 0 0 20px rgba(59,130,246,.5); flex: 0 0 auto; }
+
+    /* Form */
+    .form-input { width: 100%; padding: .75rem; border-radius: .5rem; background: var(--clr-glass); border: 1px solid rgb(55,65,81); color: var(--clr-secondary); }
+    .form-input::placeholder { color: #6b7280; }
+    .form-input:focus { outline: none; box-shadow: 0 0 0 2px rgba(59,130,246,.5); }
+
+    /* Utility fix for iOS momentum scroll inside carousels */
+    .scroll-touch { -webkit-overflow-scrolling: touch; }
+
+    /* Skip link for a11y */
+    .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus { position: static; width: auto; height: auto; padding: .5rem 1rem; background: #111827; color: white; border-radius: .5rem; }
+  </style>
+</head>
+
+<body class="bg-[--clr-primary] text-[--clr-secondary] font-sans tech-bg min-h-screen">
+  <a href="#hero" class="skip-link">Skip to content</a>
+
+  <!-- Header -->
+  <header id="header" class="sticky top-0 z-50 glass-panel">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center" aria-label="Main Navigation">
+      <a href="#hero" class="text-2xl font-bold font-geometric flex items-center focus-visible-accent" aria-label="ZENIQ Home">
+        <img src="image/logojpg.jpg" width="100" height="100" alt="ZENIQ logo" class="w-10 h-10 mr-2 rounded-full shadow-lg" />
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-[--clr-secondary] to-gray-400">ZENIQ</span>
+      </a>
+
+      <div class="hidden md:flex items-center space-x-6 text-base lg:text-lg">
+        <a href="#hero" class="nav-link focus-visible-accent" aria-current="page">Home<span class="nav-underline"></span></a>
+        <a href="#services" class="nav-link focus-visible-accent">Services<span class="nav-underline"></span></a>
+        <a href="#process" class="nav-link focus-visible-accent">Process<span class="nav-underline"></span></a>
+        <a href="#team" class="nav-link focus-visible-accent">Team<span class="nav-underline"></span></a>
+        <a href="#projects" class="nav-link focus-visible-accent">Projects<span class="nav-underline"></span></a>
+        <a href="#contact" class="nav-link focus-visible-accent">Contact<span class="nav-underline"></span></a>
+      </div>
+
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md focus-visible-accent" aria-label="Open menu" aria-expanded="false">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/></svg>
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="hidden md:hidden absolute top-full left-0 right-0 glass-panel transition-all duration-300 ease-in-out">
+      <div class="flex flex-col space-y-4 p-4">
+        <a href="#hero" class="mobile-nav-link text-xl py-2 focus-visible-accent" aria-current="page">Home</a>
+        <a href="#services" class="mobile-nav-link text-xl py-2 focus-visible-accent">Services</a>
+        <a href="#process" class="mobile-nav-link text-xl py-2 focus-visible-accent">Process</a>
+        <a href="#team" class="mobile-nav-link text-xl py-2 focus-visible-accent">Team</a>
+        <a href="#projects" class="mobile-nav-link text-xl py-2 focus-visible-accent">Projects</a>
+        <a href="#contact" class="mobile-nav-link text-xl py-2 focus-visible-accent">Contact</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main id="main" class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Hero -->
+    <section id="hero" class="min-h-[85vh] flex items-center justify-center text-center py-20 relative overflow-hidden">
+      <div class="absolute inset-0 z-0 opacity-10">
+        <img src="https://placehold.co/1920x1080/0f172a/06b6d4?text=Circuit+Lines" alt="Subtle circuit background" class="w-full h-full object-cover" loading="eager" />
+      </div>
+
+      <div class="max-w-4xl z-10 fade-in">
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-extrabold font-geometric mb-6 leading-tight" aria-label="Solutions made Simple.">
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[--clr-secondary] to-gray-400">Solutions </span>
+          <span class="text-transparent bg-clip-text bg-gradient-to-r from-[--clr-accent] to-[--clr-highlight] tracking-wide">made Simple.</span>
+        </h1>
+        <p class="text-lg sm:text-xl lg:text-2xl text-gray-300 mb-10 max-w-2xl mx-auto">We find the problems. We build the fix. Diagnosing complex organizational issues and building smart, secure software that drives genuine impact.</p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a href="#contact" class="cta-button primary-cta focus-visible-accent">Get a Consultation</a>
+          <a href="#projects" class="cta-button secondary-cta focus-visible-accent">See Our Work</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="my-16"><hr class="border-gray-800"></div>
+
+    <!-- About -->
+    <section id="about" class="py-16 fade-in">
+      <h2 class="text-4xl sm:text-5xl font-bold font-geometric text-center mb-12">Who We Are</h2>
+      <div class="max-w-4xl mx-auto text-center glass-panel p-6 sm:p-8 rounded-xl">
+        <p class="text-lg leading-relaxed text-gray-300 mb-6"><strong class="text-[--clr-accent]">ZENIQ</strong> is a student-led ICT team operating as a professional software engineering company for this project. We specialize in diagnosing organizational challenges—public or private—then designing and delivering practical, secure software solutions.</p>
+        <h3 class="text-2xl font-semibold mb-4 text-[--clr-highlight]">Our Mission & Values</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="p-3 rounded-lg border-b-2 border-[--clr-accent]">
+            <span class="text-xl font-bold block">Integrity</span>
+            <span class="text-sm text-gray-400">Honest diagnosis, transparent process.</span>
+          </div>
+          <div class="p-3 rounded-lg border-b-2 border-[--clr-accent]">
+            <span class="text-xl font-bold block">Impact</span>
+            <span class="text-sm text-gray-400">Measurable results, not just code.</span>
+          </div>
+          <div class="p-3 rounded-lg border-b-2 border-[--clr-accent]">
+            <span class="text-xl font-bold block">Simplicity</span>
+            <span class="text-sm text-gray-400">Elegant design, efficient solutions.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="my-16"><hr class="border-gray-800"></div>
+
+    <!-- Services -->
+    <section id="services" class="py-16 fade-in">
+      <h2 class="text-4xl sm:text-5xl font-bold font-geometric text-center mb-12">What We Do</h2>
+      <p class="text-xl text-center text-gray-300 mb-10">From issue to impact: A full-cycle approach to digital transformation.</p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- service card -->
+        <div class="glass-panel rounded-xl p-6 transition duration-300 hover:shadow-2xl hover:shadow-[--clr-accent]/30 focus-visible-accent" tabindex="0">
+          <div class="mb-4 text-[--clr-accent]"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg></div>
+          <h3 class="text-xl font-semibold mb-2">Problem Discovery</h3>
+          <p class="text-gray-400">In-depth analysis to precisely locate bottlenecks and technical debt in existing systems.</p>
+        </div>
+
+        <div class="glass-panel rounded-xl p-6 transition duration-300 hover:shadow-2xl hover:shadow-[--clr-accent]/30 focus-visible-accent" tabindex="0">
+          <div class="mb-4 text-[--clr-accent]"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l-2 2L4 5m7 14h2l2-2m-2-7h2"/></svg></div>
+          <h3 class="text-xl font-semibold mb-2">Business Analysis</h3>
+          <p class="text-gray-400">Defining clear requirements, user stories, and measurable success criteria for the solution.</p>
+        </div>
+
+        <div class="glass-panel rounded-xl p-6 transition duration-300 hover:shadow-2xl hover:shadow-[--clr-accent]/30 focus-visible-accent" tabindex="0">
+          <div class="mb-4 text-[--clr-accent]"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l-4 4-4-4"/></svg></div>
+          <h3 class="text-xl font-semibold mb-2">System Design & QA</h3>
+          <p class="text-gray-400">Designing robust, scalable architectures and implementing rigorous quality assurance protocols.</p>
+        </div>
+
+        <div class="glass-panel rounded-xl p-6 transition duration-300 hover:shadow-2xl hover:shadow-[--clr-accent]/30 focus-visible-accent" tabindex="0">
+          <div class="mb-4 text-[--clr-accent]"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l-4 4-4-4m4 4v7"/></svg></div>
+          <h3 class="text-xl font-semibold mb-2">Software Development</h3>
+          <p class="text-gray-400">Building custom, high-performance web and mobile applications with clean, modern code.</p>
+        </div>
+
+        <div class="glass-panel rounded-xl p-6 transition duration-300 hover:shadow-2xl hover:shadow-[--clr-accent]/30 focus-visible-accent" tabindex="0">
+          <div class="mb-4 text-[--clr-accent]"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+          <h3 class="text-xl font-semibold mb-2">Data/AI Integration</h3>
+          <p class="text-gray-400">Leveraging data science and machine learning to automate processes and unlock new insights.</p>
+        </div>
+
+        <div class="glass-panel rounded-xl p-6 transition duration-300 hover:shadow-2xl hover:shadow-[--clr-accent]/30 focus-visible-accent" tabindex="0">
+          <div class="mb-4 text-[--clr-accent]"><svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v4c0 1.1.9 2 2 2m14 0v9c0 1.1-.9 2-2 2H5c-1.1 0-2-.9-2-2v-9"/></svg></div>
+          <h3 class="text-xl font-semibold mb-2">GovTech Modernization</h3>
+          <p class="text-gray-400">Secure, accessible solutions tailored for public sector efficiency and citizen services.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="my-16"><hr class="border-gray-800"></div>
+
+    <!-- Process -->
+    <section id="process" class="py-16 fade-in">
+      <h2 class="text-4xl sm:text-5xl font-bold font-geometric text-center mb-12">Our Simple Process</h2>
+      <p class="text-xl text-center text-gray-300 mb-10">A clear, iterative path from initial challenge to deployed success.</p>
+
+      <div class="max-w-6xl mx-auto space-y-12">
+        <!-- Step: each row is its own flex with an inline dot between halves -->
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <div class="sm:w-1/2 sm:pr-6 text-center sm:text-right">
+            <h3 class="text-3xl font-bold text-[--clr-accent] mb-1">1. Discover</h3>
+            <p class="text-lg text-gray-300">Outcome: <strong class="text-[--clr-secondary]">Root Cause &amp; Requirement Map.</strong></p>
+          </div>
+          <div class="timeline-dot-inline"></div>
+          <div class="sm:w-1/2 sm:pl-6"></div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <div class="sm:w-1/2 sm:pr-6 hidden sm:block"></div>
+          <div class="timeline-dot-inline"></div>
+          <div class="sm:w-1/2 sm:pl-6 text-center sm:text-left">
+            <h3 class="text-3xl font-bold text-[--clr-accent] mb-1">2. Analyze</h3>
+            <p class="text-lg text-gray-300">Outcome: <strong class="text-[--clr-secondary]">Functional Specification Document.</strong></p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <div class="sm:w-1/2 sm:pr-6 text-center sm:text-right">
+            <h3 class="text-3xl font-bold text-[--clr-accent] mb-1">3. Design</h3>
+            <p class="text-lg text-gray-300">Outcome: <strong class="text-[--clr-secondary]">System Architecture &amp; Wireframes.</strong></p>
+          </div>
+          <div class="timeline-dot-inline"></div>
+          <div class="sm:w-1/2 sm:pl-6"></div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <div class="sm:w-1/2 sm:pr-6 hidden sm:block"></div>
+          <div class="timeline-dot-inline"></div>
+          <div class="sm:w-1/2 sm:pl-6 text-center sm:text-left">
+            <h3 class="text-3xl font-bold text-[--clr-accent] mb-1">4. Build</h3>
+            <p class="text-lg text-gray-300">Outcome: <strong class="text-[--clr-secondary]">Working MVP/Beta Release.</strong></p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <div class="sm:w-1/2 sm:pr-6 text-center sm:text-right">
+            <h3 class="text-3xl font-bold text-[--clr-accent] mb-1">5. Test</h3>
+            <p class="text-lg text-gray-300">Outcome: <strong class="text-[--clr-secondary]">Security &amp; Performance Audit.</strong></p>
+          </div>
+          <div class="timeline-dot-inline"></div>
+          <div class="sm:w-1/2 sm:pl-6"></div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <div class="sm:w-1/2 sm:pr-6 hidden sm:block"></div>
+          <div class="timeline-dot-inline"></div>
+          <div class="sm:w-1/2 sm:pl-6 text-center sm:text-left">
+            <h3 class="text-3xl font-bold text-[--clr-accent] mb-1">6. Deploy</h3>
+            <p class="text-lg text-gray-300">Outcome: <strong class="text-[--clr-secondary]">Production-Ready System.</strong></p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4">
+          <div class="sm:w-1/2 sm:pr-6 text-center sm:text-right">
+            <h3 class="text-3xl font-bold text-[--clr-accent] mb-1">7. Improve</h3>
+            <p class="text-lg text-gray-300">Outcome: <strong class="text-[--clr-secondary]">Post-Launch Support &amp; Iteration.</strong></p>
+          </div>
+          <div class="timeline-dot-inline"></div>
+          <div class="sm:w-1/2 sm:pl-6"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="my-16"><hr class="border-gray-800"></div>
+
+    <!-- Team -->
+    <section id="team" class="py-16 fade-in">
+      <h2 class="text-4xl sm:text-5xl font-bold font-geometric text-center mb-12">Meet the Team</h2>
+      <p class="text-xl text-center text-gray-300 mb-10">The student engineers driving the next generation of solutions.</p>
+
+      <div class="relative">
+        <button id="scroll-left" class="hidden lg:block absolute left-0 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-[--clr-accent]/50 hover:bg-[--clr-accent] transition focus-visible-accent" aria-label="Scroll left">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="scroll-right" class="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-[--clr-accent]/50 hover:bg-[--clr-accent] transition focus-visible-accent" aria-label="Scroll right">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </button>
+
+        <div id="team-carousel" class="horizontal-scroll-bar scroll-touch flex space-x-6 p-4 overflow-x-auto snap-x snap-mandatory scroll-p-4">
+          <!-- team card (repeat) -->
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/l.jpg" alt="Team Lead Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Ashan Sachintha</h4>
+            <p class="text-[--clr-highlight] text-sm">Team Lead / Systems Architect</p>
+            <p class="text-sm text-gray-400 mt-2">Drives vision &amp; technical strategy.</p>
+          </div>
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/8.jpg" alt="Business Analyst Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Amashi Pathiraja</h4>
+            <p class="text-[--clr-highlight] text-sm">Business Analyst / PM</p>
+            <p class="text-sm text-gray-400 mt-2">Bridging client needs with code.</p>
+          </div>
+
+           <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/2.jpg" alt="Business Analyst Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Kaveesha Sithum</h4>
+            <p class="text-[--clr-highlight] text-sm">Project Manager</p>
+            <p class="text-sm text-gray-400 mt-2">Bridging client needs with code.</p>
+          </div>
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/9.jpg" alt="Business Analyst Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Sandaruwan Wadiyage</h4>
+            <p class="text-[--clr-highlight] text-sm">QA Enginne</p>
+            <p class="text-sm text-gray-400 mt-2">Bridging client needs with code.</p>
+          </div>
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/1.jpg" alt="Frontend Developer Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Shan Pulina</h4>
+            <p class="text-[--clr-highlight] text-sm">Full Stack Developer</p>
+            <p class="text-sm text-gray-400 mt-2">Focus on responsive, accessible UIs.</p>
+          </div>
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/3.jpg" alt="Frontend Developer Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Imalka Jayantha </h4>
+            <p class="text-[--clr-highlight] text-sm">Frontend Developer</p>
+            <p class="text-sm text-gray-400 mt-2">Focus on responsive, accessible UIs.</p>
+          </div>
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/5.jpg" alt="Backend Developer Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Savindu Damsith</h4>
+            <p class="text-[--clr-highlight] text-sm">Backend Developer</p>
+            <p class="text-sm text-gray-400 mt-2">Building secure, scalable APIs.</p>
+          </div>
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/6.jpg" alt="QA Engineer Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Nethmal Geesara</h4>
+            <p class="text-[--clr-highlight] text-sm">Full Stack Developer</p>
+            <p class="text-sm text-gray-400 mt-2">Ensures quality and minimal bugs.</p>
+          </div>
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/4.jpg" alt="UI/UX Designer Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Viduravi Adhithya</h4>
+            <p class="text-[--clr-highlight] text-sm">UI/UX Designer</p>
+            <p class="text-sm text-gray-400 mt-2">Creating intuitive user experiences.</p>
+          </div>
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/7.jpg" alt="Backend Developer Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Shanuka Upendra</h4>
+            <p class="text-[--clr-highlight] text-sm">Front End Develope</p>
+            <p class="text-sm text-gray-400 mt-2">Building secure, scalable APIs.</p>
+          </div>
+
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/10.jpg" alt="Backend Developer Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Aravinda Amarasingha</h4>
+            <p class="text-[--clr-highlight] text-sm">Full Stack Developer Social Media Manager</p>
+            <p class="text-sm text-gray-400 mt-2">Building secure, scalable APIs.</p>
+          </div>
+
+
+          <div class="min-w-[200px] w-52 glass-panel rounded-xl p-6 text-center snap-center transition duration-300 hover:scale-[1.02] focus-visible-accent" tabindex="0">
+            <img src="image/v.jpg" alt="Backend Developer Avatar" width="120" height="120" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-[--clr-accent] object-cover" loading="lazy" />
+            <h4 class="text-xl font-bold">Visal Dinuwara</h4>
+            <p class="text-[--clr-highlight] text-sm"> Full Stack Developer</p>
+            <p class="text-sm text-gray-400 mt-2">Building secure, scalable APIs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="my-16"><hr class="border-gray-800"></div>
+
+    <!-- Projects -->
+    <section id="projects" class="py-16 fade-in">
+      <h2 class="text-4xl sm:text-5xl font-bold font-geometric text-center mb-12">Our Impactful Projects</h2>
+      <p class="text-xl text-center text-gray-300 mb-10">Real-world results achieved through focused engineering.</p>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <article class="glass-panel rounded-xl p-6 flex flex-col focus-visible-accent" tabindex="0">
+          <h3 class="text-2xl font-bold mb-3 text-[--clr-highlight]">Municipal Permit System</h3>
+          <p class="text-sm text-gray-400 italic mb-4">GovTech Modernization</p>
+          <p class="text-gray-300 mb-4 flex-grow">Problem: Manual, paper-based permit application process caused month-long delays and high administrative overhead.</p>
+          <div class="border-t border-gray-700 pt-3">
+            <p class="text-lg font-semibold text-[--clr-secondary]">Outcome Metric:</p>
+            <p class="text-3xl font-extrabold text-[--clr-accent]">30% Faster Case Processing</p>
+            <p class="text-sm text-gray-400">Achieved via automated routing and digital signatures.</p>
+          </div>
+        </article>
+
+        <article class="glass-panel rounded-xl p-6 flex flex-col focus-visible-accent" tabindex="0">
+          <h3 class="text-2xl font-bold mb-3 text-[--clr-highlight]">Internal Analytics Dashboard</h3>
+          <p class="text-sm text-gray-400 italic mb-4">Data/AI Integration</p>
+          <p class="text-gray-300 mb-4 flex-grow">Problem: Critical operational data was siloed across five disparate legacy systems, leading to poor strategic decisions.</p>
+          <div class="border-t border-gray-700 pt-3">
+            <p class="text-lg font-semibold text-[--clr-secondary]">Outcome Metric:</p>
+            <p class="text-3xl font-extrabold text-[--clr-accent]">99% Data Cohesion</p>
+            <p class="text-sm text-gray-400">Unified data pipeline resulted in real-time, actionable insights.</p>
+          </div>
+        </article>
+
+        <article class="glass-panel rounded-xl p-6 flex flex-col focus-visible-accent" tabindex="0">
+          <h3 class="text-2xl font-bold mb-3 text-[--clr-highlight]">HR Onboarding Automation</h3>
+          <p class="text-sm text-gray-400 italic mb-4">Software Development</p>
+          <p class="text-gray-300 mb-4 flex-grow">Problem: Manual HR onboarding required 5 hours of staff time per new employee and high error rates.</p>
+          <div class="border-t border-gray-700 pt-3">
+            <p class="text-lg font-semibold text-[--clr-secondary]">Outcome Metric:</p>
+            <p class="text-3xl font-extrabold text-[--clr-accent]">80% Staff Time Reduction</p>
+            <p class="text-sm text-gray-400">Full-stack application automates document generation and system access.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="mt-20 fade-in">
+        <h3 class="text-3xl font-bold text-center mb-8">Our Resech Gallry</h3>
+        <div class="flex flex-wrap justify-center items-center gap-8 opacity-70">
+          <img src="image/1.jpg" alt="" width="500" height="500" class="h-500 sm:h-500 opacity-500 hover:opacity-500 transition duration-500" loading="lazy" />
+          <img src="image/10.jpg" alt="" width="500" height="500" class="h-500 sm:h-500 opacity-500 hover:opacity-500 transition duration-500" loading="lazy" />
+          <img src="image/2.jpg" alt="" width="500" height="500" class="h-500 sm:h-500 opacity-500 hover:opacity-500 transition duration-500" loading="lazy" />
+          <img src="image/3.jpg" alt="" width="500" height="500" class="h-500 sm:h-500 opacity-500 hover:opacity-500 transition duration-500" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <div class="my-16"><hr class="border-gray-800"></div>
+
+    <!-- Contact -->
+    <section id="contact" class="py-16 fade-in">
+      <h2 class="text-4xl sm:text-5xl font-bold font-geometric text-center mb-12">Start a Discovery Call</h2>
+      <p class="text-xl text-center text-gray-300 mb-10">Describe your challenge. We'll find the most efficient path to impact.</p>
+
+      <div class="max-w-4xl mx-auto grid lg:grid-cols-2 gap-10">
+        <div class="glass-panel p-6 sm:p-8 rounded-xl">
+          <form id="contact-form" class="space-y-4" novalidate>
+            <div>
+              <label for="name" class="block text-sm font-medium mb-1">Your Name *</label>
+              <input type="text" id="name" name="name" required placeholder="John Doe" class="form-input" aria-required="true" />
+            </div>
+            <div>
+              <label for="email" class="block text-sm font-medium mb-1">Work Email *</label>
+              <input type="email" id="email" name="email" required placeholder="john@organization.com" class="form-input" aria-required="true" />
+            </div>
+            <div>
+              <label for="organization" class="block text-sm font-medium mb-1">Organization Name *</label>
+              <input type="text" id="organization" name="organization" required placeholder="Gov Dept. or Company Name" class="form-input" aria-required="true" />
+            </div>
+            <div>
+              <label for="problem" class="block text-sm font-medium mb-1">Brief Problem Summary *</label>
+              <textarea id="problem" name="problem" rows="4" required placeholder="Our legacy system is causing a 20% delay in processing claims..." class="form-input" aria-required="true"></textarea>
+            </div>
+            <div>
+              <label for="file-upload" class="block text-sm font-medium mb-1">Upload Supporting File (Optional)</label>
+              <input type="file" id="file-upload" name="file-upload" class="block w-full text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:font-semibold file:bg-[--clr-accent]/20 file:text-[--clr-accent] hover:file:bg-[--clr-accent]/30 focus-visible-accent" />
+            </div>
+
+            <div id="form-success-message" class="hidden p-3 rounded-lg bg-green-900 border border-green-700 text-white" role="alert" aria-live="polite">
+              <p class="font-semibold">Thank you! Your inquiry has been sent.</p>
+              <p class="text-sm">We will be in touch within 24 hours to schedule a discovery call.</p>
+            </div>
+
+            <button type="submit" class="cta-button primary-cta w-full focus-visible-accent">Send Discovery Request</button>
+          </form>
+        </div>
+
+        <div class="space-y-6 lg:mt-0 p-2 sm:p-6">
+          <div class="space-y-2">
+            <h3 class="text-2xl font-bold text-[--clr-highlight]">Contact Details</h3>
+            <p class="text-lg"><span class="font-semibold block">Email:</span> <a href="mailto:info@zeniq.com" class="hover:text-[--clr-accent] transition focus-visible-accent">info@zeniq.com</a></p>
+            <p class="text-lg"><span class="font-semibold block">Phone:</span> <a href="tel:+1555ZENIQ" class="hover:text-[--clr-accent] transition focus-visible-accent">+1 (555) ZENIQ</a></p>
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-2xl font-bold text-[--clr-highlight]">Our Hub</h3>
+            <p class="text-lg text-gray-300">Student-led, operating from the ICT Institute campus.<br>Serving clients globally through secure remote collaboration.</p>
+            <img src="image/m.png" alt="Location map placeholder" width="400" height="200" class="w-full h-auto rounded-lg mt-4" loading="lazy" />
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="text-2xl font-bold text-[--clr-highlight]">Social Links</h3>
+            <div class="flex space-x-4">
+              <a href="#" aria-label="ZENIQ on LinkedIn" class="text-2xl hover:text-[--clr-accent] transition focus-visible-accent"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM4 9h4v12H4zM6 4a2 2 0 100 4 2 2 0 000-4z"/></svg></a>
+              <a href="#" aria-label="ZENIQ on Twitter/X" class="text-2xl hover:text-[--clr-accent] transition focus-visible-accent"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.21-6.91 5.067-5.8-5.067 5.8-4.757-5.467 4.757 5.467-3.376-3.878L.988 2.25H4.29L12 10.74 19.71 2.25h-1.466l-6.19 7.07L18.244 2.25zM12.457 20.74h-2.126L2.302 3.25h2.125l7.03 17.49z"/></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[--clr-primary] border-t border-gray-800 mt-20 py-10">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="col-span-2 md:col-span-1">
+          <div class="text-2xl font-bold font-geometric flex items-center mb-3">
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-[--clr-secondary] to-gray-400">ZENIQ</span>
+          </div>
+          <p class="text-sm text-gray-400">Solutions made Simple. From issue to impact.</p>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-semibold mb-3 text-[--clr-highlight]">Quick Links</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#about" class="hover:text-[--clr-accent] transition focus-visible-accent">About Us</a></li>
+            <li><a href="#services" class="hover:text-[--clr-accent] transition focus-visible-accent">Services</a></li>
+            <li><a href="#projects" class="hover:text-[--clr-accent] transition focus-visible-accent">Case Studies</a></li>
+            <li><a href="#" class="hover:text-[--clr-accent] transition focus-visible-accent">Careers (Student Ops)</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-lg font-semibold mb-3 text-[--clr-highlight]">Resources</h4>
+          <ul class="space-y-2 text-gray-400">
+            <li><a href="#" class="hover:text-[--clr-accent] transition focus-visible-accent">Terms of Service</a></li>
+            <li><a href="#" class="hover:text-[--clr-accent] transition focus-visible-accent">Privacy Policy</a></li>
+            <li><a href="#" class="hover:text-[--clr-accent] transition focus-visible-accent">Sitemap</a></li>
+          </ul>
+        </div>
+
+        <div class="col-span-2 md:col-span-1">
+          <h4 class="text-lg font-semibold mb-3 text-[--clr-highlight]">Ready to Solve?</h4>
+          <a href="#contact" class="inline-block px-4 py-2 bg-[--clr-accent] text-white rounded-full font-semibold hover:bg-[--clr-accent]/80 transition duration-300 shadow-lg focus-visible-accent">Get a Consultation</a>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-gray-800 text-center">
+        <p class="text-sm text-gray-500">&copy; <span id="current-year">2025</span> ZENIQ. All rights reserved. | <span class="text-[--clr-accent] text-xs">Student-Powered Engineering.</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="back-to-top" class="fixed bottom-4 right-4 p-3 rounded-full bg-[--clr-accent] text-white shadow-xl opacity-0 transition-opacity duration-300 focus-visible-accent" aria-label="Back to top" style="display:none;">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+  </button>
+
+  <!-- JSON-LD (moved to end to reduce render-blocking) -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "ZENIQ",
+      "url": "https://zeniq.com/",
+      "logo": "https://zeniq.com/logo.svg",
+      "contactPoint": {"@type": "ContactPoint", "telephone": "+1-555-ZENIQ", "contactType": "Customer Service"}
+    }
+  </script>
+
+  <!-- Scripts -->
+  <script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Current year
+      const yearEl = document.getElementById('current-year');
+      if (yearEl) yearEl.textContent = new Date().getFullYear();
+
+      // Mobile menu
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const navLinks = document.querySelectorAll('.mobile-nav-link, .nav-link');
+      if (mobileMenuBtn && mobileMenu) {
+        mobileMenuBtn.addEventListener('click', () => {
+          const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+          mobileMenu.classList.toggle('hidden');
+          mobileMenuBtn.setAttribute('aria-expanded', String(!isExpanded));
+        });
+        navLinks.forEach(link => link.addEventListener('click', () => {
+          if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+          }
+        }));
+      }
+
+      // Fade-in on intersect
+      const fadeEls = document.querySelectorAll('.fade-in');
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); obs.unobserve(e.target); } });
+      }, { threshold: 0.1 });
+      fadeEls.forEach(el => io.observe(el));
+
+      // Team carousel scroll controls
+      const teamCarousel = document.getElementById('team-carousel');
+      const scrollLeftBtn = document.getElementById('scroll-left');
+      const scrollRightBtn = document.getElementById('scroll-right');
+      const scrollByPx = 300;
+      if (teamCarousel && scrollLeftBtn && scrollRightBtn) {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const smooth = prefersReduced ? 'auto' : 'smooth';
+        scrollLeftBtn.addEventListener('click', () => teamCarousel.scrollBy({ left: -scrollByPx, behavior: smooth }));
+        scrollRightBtn.addEventListener('click', () => teamCarousel.scrollBy({ left: scrollByPx, behavior: smooth }));
+      }
+
+      // Back to top
+      const backToTopBtn = document.getElementById('back-to-top');
+      const toggleBackToTop = () => {
+        if (window.scrollY > 400) {
+          backToTopBtn.style.display = 'block';
+          setTimeout(() => backToTopBtn.style.opacity = '1', 10);
+        } else {
+          backToTopBtn.style.opacity = '0';
+          setTimeout(() => backToTopBtn.style.display = 'none', 300);
+        }
+      };
+      window.addEventListener('scroll', toggleBackToTop);
+      backToTopBtn.addEventListener('click', () => {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        window.scrollTo({ top: 0, behavior: prefersReduced ? 'auto' : 'smooth' });
+      });
+
+      // Contact form (demo)
+      const form = document.getElementById('contact-form');
+      const success = document.getElementById('form-success-message');
+      if (form) {
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const submitBtn = form.querySelector('button[type="submit"]');
+          const { name, email, organization, problem } = Object.fromEntries(new FormData(form));
+          if (!name || !email || !organization || !problem) { alert('Please fill out all required fields (*).'); return; }
+          submitBtn.disabled = true; submitBtn.textContent = 'Sending...';
+          setTimeout(() => {
+            form.reset();
+            success.classList.remove('hidden');
+            submitBtn.textContent = 'Sent!';
+            setTimeout(() => { submitBtn.disabled = false; submitBtn.textContent = 'Send Discovery Request'; success.classList.add('hidden'); }, 4000);
+          }, 800);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
